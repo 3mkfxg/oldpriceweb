@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jordan PC Parts Comparator - Cyber Storefront</title>
+    <!-- Google Fonts: Outfit for body, Orbitron for futuristic tech headings -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for futuristic shop UI icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Glowing Cyber Background Decor -->
+    <div class="cyber-bg-glow glow-top-left"></div>
+    <div class="cyber-bg-glow glow-bottom-right"></div>
+
+    <div class="app-container">
+        
+        <!-- ================= HEADER SECTION ================= -->
+        <header class="app-header">
+            <div class="header-logo">
+                <i class="fa-solid fa-microchip logo-icon"></i>
+                <div class="logo-text">
+                    <h1>NEON<span>PARTS</span></h1>
+                    <p>Jordan PC Components Comparator</p>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-badge">
+                    <span class="stat-num" id="stat-total-products">0</span>
+                    <span class="stat-label">Total Components</span>
+                </div>
+                <div class="stat-badge store-igeek">
+                    <span class="stat-num" id="stat-igeek-count">0</span>
+                    <span class="stat-label">iGeek.jo</span>
+                </div>
+                <div class="stat-badge store-citycenter">
+                    <span class="stat-num" id="stat-city-count">0</span>
+                    <span class="stat-label">City Center</span>
+                </div>
+                <div class="stat-badge store-osjo">
+                    <span class="stat-num" id="stat-osjo-count">0</span>
+                    <span class="stat-label">Oriental Store</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- ================= MAIN LAYOUT ================= -->
+        <main class="main-layout">
+            
+            <!-- 1. LEFT FILTER COLUMN -->
+            <aside class="filter-sidebar glass-panel">
+                <div class="filter-group-header">
+                    <h2><i class="fa-solid fa-sliders"></i> Search & Filters</h2>
+                    <button class="btn-clear-all" id="btn-reset-filters"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+                </div>
+
+                <!-- Instant Search -->
+                <div class="filter-group">
+                    <label class="group-label">Instant Search</label>
+                    <div class="search-input-wrapper">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <input type="text" id="search-input" placeholder="Search CPU, RTX, SSD, Motherboard..." autocomplete="off">
+                        <button class="clear-search-btn" id="btn-clear-search" style="display: none;"><i class="fa-solid fa-xmark"></i></button>
+                    </div>
+                </div>
+
+                <!-- Website Selector -->
+                <div class="filter-group">
+                    <label class="group-label">Jordan Tech Stores</label>
+                    <div class="checkbox-list">
+                        <label class="custom-checkbox igeek-check">
+                            <input type="checkbox" class="store-filter" value="iGeek.jo" checked>
+                            <span class="checkmark"></span>
+                            <span class="label-text">iGeek.jo</span>
+                        </label>
+                        <label class="custom-checkbox citycenter-check">
+                            <input type="checkbox" class="store-filter" value="City Center" checked>
+                            <span class="checkmark"></span>
+                            <span class="label-text">City Center</span>
+                        </label>
+                        <label class="custom-checkbox osjo-check">
+                            <input type="checkbox" class="store-filter" value="Oriental Store" checked>
+                            <span class="checkmark"></span>
+                            <span class="label-text">Oriental Store</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Component Type Filters -->
+                <div class="filter-group">
+                    <label class="group-label">PC Component Type</label>
+                    <div class="category-grid" id="category-filter-list">
+                        <!-- Filled dynamically by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Price Range Filter -->
+                <div class="filter-group">
+                    <label class="group-label">Price Range (JOD)</label>
+                    <div class="price-slider-container">
+                        <div class="price-inputs">
+                            <div class="price-field">
+                                <span>Min</span>
+                                <input type="number" id="price-min" value="0">
+                            </div>
+                            <div class="price-field">
+                                <span>Max</span>
+                                <input type="number" id="price-max" value="1000">
+                            </div>
+                        </div>
+                        <div class="range-slider">
+                            <div class="slider-track" id="slider-track"></div>
+                            <input type="range" id="slider-min" min="0" max="2500" value="0" step="5">
+                            <input type="range" id="slider-max" min="0" max="2500" value="2500" step="5">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stock Status Toggle -->
+                <div class="filter-group">
+                    <label class="group-label">Availability</label>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="stock-only-toggle">
+                        <span class="toggle-slider"></span>
+                        <span class="toggle-label-text">In Stock Only</span>
+                    </label>
+                </div>
+            </aside>
+
+            <!-- 2. RIGHT CATALOG GRID -->
+            <section class="catalog-section">
+                <!-- Sorting & Metadata Toolbar -->
+                <div class="catalog-toolbar glass-panel">
+                    <div class="results-meta">
+                        <span class="results-count" id="results-count-text">Found 0 products</span>
+                        <div class="active-chips" id="active-chips-container">
+                            <!-- Selected filter tags shown dynamically -->
+                        </div>
+                    </div>
+                    <div class="sorting-controls">
+                        <label for="sort-select">Sort By:</label>
+                        <select id="sort-select" class="glass-select">
+                            <option value="price-asc">Price: Low to High</option>
+                            <option value="price-desc">Price: High to Low</option>
+                            <option value="name-asc">Name: A to Z</option>
+                            <option value="category">Category</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Dynamic Grid Loader -->
+                <div class="products-grid" id="products-catalog-grid">
+                    <!-- Cards are rendered dynamically by JavaScript -->
+                    <div class="catalog-loader">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        <p>Initializing neon storefront dataset...</p>
+                    </div>
+                </div>
+
+                <!-- Pagination Panel -->
+                <div class="pagination-container" id="pagination-panel">
+                    <!-- Dynamic page buttons loaded here -->
+                </div>
+            </section>
+        </main>
+        
+        <!-- ================= FLOATING COMPARE TRAY ================= -->
+        <div class="compare-tray" id="compare-tray">
+            <div class="compare-tray-header" id="compare-tray-toggle">
+                <div class="compare-title">
+                    <i class="fa-solid fa-scale-balanced tray-icon"></i>
+                    <h3>Compare Components (<span id="compare-count">0</span>/3)</h3>
+                </div>
+                <div class="compare-tray-controls">
+                    <span class="compare-hint">Select up to 3 parts to compare side-by-side</span>
+                    <button class="btn-toggle-tray"><i class="fa-solid fa-chevron-up" id="tray-chevron"></i></button>
+                </div>
+            </div>
+            <div class="compare-tray-body">
+                <div class="compare-slots-container" id="compare-slots">
+                    <!-- Compare slots rendered here -->
+                </div>
+                <div class="compare-action-block">
+                    <button class="btn-compare-action btn-glowing-neon" id="btn-trigger-compare" disabled>
+                        <i class="fa-solid fa-circle-check"></i> Compare Now
+                    </button>
+                    <button class="btn-clear-compare" id="btn-clear-compare-all">Clear All</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= SIDE-BY-SIDE COMPARATIVE OVERLAY MODAL ================= -->
+    <div class="modal-overlay" id="compare-modal">
+        <div class="modal-content glass-panel">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-scale-balanced"></i> Side-by-Side Product Comparison</h2>
+                <button class="btn-close-modal" id="btn-close-compare-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="comparison-table-wrapper">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr id="compare-row-headers">
+                                <th class="attr-header">Attribute</th>
+                                <!-- Dynamic item headers inserted here -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="compare-row-store">
+                                <td class="attr-label">Store Origin</td>
+                            </tr>
+                            <tr id="compare-row-category">
+                                <td class="attr-label">Component Category</td>
+                            </tr>
+                            <tr id="compare-row-name">
+                                <td class="attr-label">Product Name</td>
+                            </tr>
+                            <tr id="compare-row-price">
+                                <td class="attr-label">Price (JOD)</td>
+                            </tr>
+                            <tr id="compare-row-status">
+                                <td class="attr-label">Availability Status</td>
+                            </tr>
+                            <tr id="compare-row-action">
+                                <td class="attr-label">Shop Link</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SheetJS for parsing XLSX directly in browser -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- Core App JS -->
+    <script src="app.js"></script>
+</body>
+</html>
